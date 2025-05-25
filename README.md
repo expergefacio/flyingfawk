@@ -11,7 +11,9 @@
 
 ## Screens
 
+Video preview using ffmpeg:
 ![flyingfawk Screenshot vid](https://raw.githubusercontent.com/expergefacio/flyingfawk/refs/heads/main/screens/vid.jpeg)
+Move files by prepopulting the terminal:
 ![flyingfawk Screenshot term](https://raw.githubusercontent.com/expergefacio/flyingfawk/refs/heads/main/screens/term.jpeg)
 
 ## Who it's for
