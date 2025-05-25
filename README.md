@@ -9,7 +9,17 @@
 
 ## Who it's for
 
-This tool is designed for **power users** — those comfortable working with Linux, servers, and Docker.
+This tool is designed for "power users" — those comfortable working with Linux, servers, and Docker.
+
+---
+
+## Features
+
+FlyingFawk provides:
+- Dual-pane file navigation
+- Web-based terminal
+- File preview support (images, text, PDFs, etc.)
+- Upload, rename, delete, and run user-scripts
 
 ---
 
@@ -49,6 +59,7 @@ sudo ufw allow 8096 && sudo ufw enable && sudo ufw reload
 
 ### 5. Clone the repo
 ```bash
+#this have only been tested running from /home/username/flyingfawk
 git clone https://github.com/yourusername/flyingfawk.git
 cd flyingfawk
 ```
@@ -67,40 +78,28 @@ USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ```
-
-Set these securely in a `.env` file or system environment:
-```bash
-export USERNAME=youruser
-export PASSWORD=yourpass
-export SECRET_KEY=yoursecretkey
+Edit `docker-compose.yml`:
+```python
+      - FLASK_SECRET_KEY=3r9SFlExUIr2s8jeluszKYe0
 ```
-
-Or create a `.env` file:
-```
-USERNAME=youruser
-PASSWORD=yourpass
-SECRET_KEY=yoursecretkey
-```
-
-Update `docker-compose.yml` to include:
-```yaml
-environment:
-  - USERNAME=${USERNAME}
-  - PASSWORD=${PASSWORD}
-  - SECRET_KEY=${SECRET_KEY}
-```
+      - FLASK_SECRET_KEY=3r9SFlExUIr2s8jeluszKYe0
 
 ### 📁 Mount volumes
+Take note that this is designed to run on the same userid as the host, so if are not running the default 1000:1000, you may want to change this in the Dockerfile.
+
+Also note that the folders /hostroot represents the / on the host, and consistency here could be important in terms of compatibility with other services using the same model, i.e. if a "share publicly" prosject pops up in the future
+
+also thake note that the GUI treats /hostroot as /, but any fileoperations have to prepend /hostroot to the terminal/api/whatnot
 
 Edit `docker-compose.yml`:
 ```yaml
       # mount the flyingfawk dir as app in the container
-      - /home/expergefacio/flyingfawk:/app
+      - /home/username/flyingfawk:/app
 
       # /hostroot will act as the / inside the container
       # whatever you mount there will be visible in the ui
-      - /home/expergefacio:/hostroot/home/expergefacio
-      - /home/expergefacio/flyingfawk/userscripts:/hostroot/userscripts
+      - /home/username:/hostroot/home/expergefacio
+      - /home/username/flyingfawk/userscripts:/hostroot/userscripts
 
       # pass docker sock, needed for terminal to work
       - /var/run/docker.sock:/var/run/docker.sock
@@ -116,17 +115,7 @@ docker compose up -d
 ```
 
 Access via your browser at:  
-**http://your-server-ip:8096**
-
----
-
-## How to Use
-
-FlyingFawk provides:
-- Dual-pane file navigation
-- Web-based terminal
-- File preview support (images, text, PDFs, etc.)
-- Upload, rename, delete, and run user-scripts
+**http://0.0.0.0:8096**
 
 ---
 
