@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>fflogin</title>
+  <style>
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    flex-direction: column;
+  }
+  form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+  }
+
+  img {
+    max-width: 400px;
+  }
+
+  input {
+    width: 123px;
+  }
+
+  label {
+    display: inline;
+  }
+
+  button {
+    all: unset; /* nukes all browser button styles */
+    cursor: pointer;
+
+  }
+
+  </style>
+</head>
+<body>
+  <form method="POST">
+    <button type="submit"><img src="{{ url_for('static', filename='flyingfawk.jpeg') }}"></img></button>
+    <div class="input-row">
+      <label><input name="username" autofocus /></label>
+      <label><input name="password" type="password" /></label>
+    </div>
+  </form>
+</body>
+</html>

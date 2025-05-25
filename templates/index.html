@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+    <title>File Browser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='focus_selection.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='terminalemulator.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dropdown.css') }}">
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='preview_video.css') }}">-->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='uppy.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='xterm.css') }}">
+
+    {# Pass server-side data to JS #}
+    <script>
+        var streamingBaseUrl = "{{ streaming_base_url }}";
+        const API_BASE_URL = '/api/list';
+        const SOCKETIO_URL = "{{ socketio_url }}";
+    </script>
+    <script src="{{ url_for('static', filename='domtooltip.js') }}"></script>
+    <script src="{{ url_for('static', filename='uppy.min.js') }}"></script>
+    
+    <script src="{{ url_for('static', filename='global_functions.js') }}"></script>
+    <script src="{{ url_for('static', filename='dragdrop.js') }}"></script>
+    <script src="{{ url_for('static', filename='templates.js') }}"></script>
+    <script src="{{ url_for('static', filename='overlay_handlers.js') }}"></script>
+    <script src="{{ url_for('static', filename='column_header_resize.js') }}"></script>
+    <script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='xterm.js') }}"></script>
+    <script src="{{ url_for('static', filename='terminalemulator.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='messaging.js') }}"></script>-->
+    <!--<script src="{{ url_for('static', filename='preview_video.js') }}"></script>-->
+    <script src="{{ url_for('static', filename='preview.js') }}"></script>
+    <script src="{{ url_for('static', filename='focus_selection.js') }}"></script>
+    <script src="{{ url_for('static', filename='lynx.js') }}"></script>
+    <!--<script src="{{ url_for('static', filename='fileoperations.js') }}"></script>--> 
+    <script src="{{ url_for('static', filename='buttons.js') }}"></script>
+    <script src="{{ url_for('static', filename='userscripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='dropdown_menus.js') }}"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='keybinds.js') }}"></script>
+    <script src="{{ url_for('static', filename='keyevents.js') }}"></script>
+</head>
+<body>
+    {# Top configuration/action bar #}
+    <div id="top-bar">
+        <button id="file" disabled data-tooltip="yet to be">File</button>
+        <button id="edit">Edit</button>
+        <button id="conf" disabled data-tooltip="yet to be">Conf</button>
+        <button id="logout">Log-out</button>
+        <button id="term">Term</button>
+        <button id="userscripts">Scripts</button>
+        <button id="archive">Zip</button>
+        <button id="upload">Up</button>
+        <button id="download">Down</button>
+    </div>
+
+    {# Main container for the two panes - flexes to fill space between top/bottom bars #}
+    <div class="main-content-container">
+        <div id="left-pane" class="pane-container panefocus">
+            <div class="pane-tabs">
+                <div class="tab"></div>
+                <div class="newtab">+</div>
+            </div>
+            <div class="pane-breadcrumbs">
+                <input type="text" class="path-input" value="/">
+                <div class="breadcrumbs-links"></div>
+            </div>
+            <div class="column-header-bar">
+                <div class="column-header" data-column="name">File</div><div class="separator"></div>
+                <div class="column-header" data-column="extension">Extension</div><div class="separator"></div>
+                <div class="column-header" data-column="size">Size</div><div class="separator"></div>
+                <div class="column-header" data-column="modified">Last Modified</div><div class="separator"></div>
+                <div class="column-header" data-column="created">Date Created</div>
+            </div>
+            <div id="left-pane-file-list" class="file-list-container"><p>Loading...</p></div>
+        </div>
+
+        <div id="right-pane" class="pane-container">
+            <div class="pane-tabs">
+                <div class="tab"></div>
+                <div class="newtab">+</div>
+            </div>
+            <div class="pane-breadcrumbs">
+                <input type="text" class="path-input" value="/">
+                <div class="breadcrumbs-links"></div>
+            </div>
+            <div class="column-header-bar">
+                <div class="column-header" data-column="name">File</div><div class="separator"></div>
+                <div class="column-header" data-column="extension">Extension</div><div class="separator"></div>
+                <div class="column-header" data-column="size">Size</div><div class="separator"></div>
+                <div class="column-header" data-column="modified">Last Modified</div><div class="separator"></div>
+                <div class="column-header" data-column="created">Date Created</div>
+            </div>
+            <div id="right-pane-file-list" class="file-list-container"><p>Loading...</p></div>
+        </div>
+    </div>
+
+    {# Footer bar with action buttons #}
+    <div id="footer">
+        <button id="select">Select ⇧Z</button>
+        <button id="prew">Preview ⇧X</button>
+        <button id="rename">Rename ⇧C</button>
+        <button id="copy">Copy ⇧V</button>
+        <button id="move">Move ⇧B</button>
+        <button id="newdir">New ⇧N</button>
+        <button id="delete">Delete ⇧M</button>
+        <button id="run_in_term">Run in term ⇧:</button>
+    </div>
+
+    <div id="overlay">
+        <div id="message-box">
+            <div id="close-message">✕</div>
+            <div id="message-content">
+            </div>
+        </div>
+        <div id="preview-container">
+            <div id="show-metadata">🧾</div>
+            <div id="close-preview">✕</div>
+            <div id="metadata"></div>
+            <div id="preview-content" class="visible">
+            </div>
+        </div>
+        <div id="terminal-container">
+            <div id="close-terminal">✕</div>
+            <div id="terminal-content">
+            </div>
+        </div>
+        <div id="texteditor-container">
+            <div id="close-texteditor">✕</div>
+            <div id="texteditor-content">
+            </div>
+        </div>
+        <div id="uppy-container">
+            <div id="close-uppy">✕</div>
+            <div id="uppy-content">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

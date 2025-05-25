@@ -1,0 +1,125 @@
+⌛ Future cleanup:
+window.queueFolderSizeOverlay is misnamed, does not use overlay anymore
+folderpreview sometimes gets blocked by calc folder size logic
+
+move uppy init from main to its own .js
+
+zoom on textpreveiw change fontsize ux
+
+
+⌛ Future versions might:
+    support folder upload
+
+    basic fuctins for making usable on mobile
+        mobile, scroll not working in image preview
+
+    add text editor that isnt micro, ie htmlcssjs
+    add a filetype for notebook with sub-notes, recursive
+
+    icons for other files?
+    serve files public (separate service container)
+    dropdown config menu
+    add go and refresh buttons to panes
+    fix terminal size, style and add enter and clear button
+    mobile functionlike (js dropin to make alterations if mobile detected)
+    decide if we need context menu
+    move header and files into one scrollable div?
+    write a wrapper that detects file codec and auto-falls back to -c copy when possible, and only re-encodes when it must 
+    retain focus and selection for tabs, need to call retain(...)() "everywhere" 
+    pane-droppable for files, now only file row and tabs
+    ssh-based file browser
+
+    Real metadata?
+        If yes, here’s what you do:
+        For images: use Pillow or exifread or piexif
+        For PDFs: use PyMuPDF or PyPDF2
+        For audio/video: use ffprobe via ffmpeg
+        Let me know the types of files you're targeting and I’ll add a full drop-in extractor. You’ll go from “file stats” to actual “metadata.”
+
+
+✅ handle metadata (maybe its own overlay, or a show hide)
+
+    ✅ upload overlay
+        ✅ css
+        ✅ close button
+        ✅ test upload handling,
+
+✅ add dupe
+
+✅🟡 do a cleanup of fucntions that should be in globalfunctions.js
+
+✅🟡 BIG -> refactor video preview, add ffmpeg-python, hw support, codecs, and so on
+    -- currently settled on preset-superquick, but this definately should be
+    completely refactored at some point to make use on WS for quick seeking and stuff
+    -- deffo not gstreamer its fucking hopeless to get running inside the container with python-gi
+    -- maybe look at hacking together a solution using vlc
+✅🟡 partial: tabs (localstorage, keep list of selection and focus, use retain...)
+
+
+
+✅ add logout bttn
+✅ preview
+    ✅ navigate pdf buttons
+    ✅    pdf zoom
+    ✅    image zoom
+    ✅ preview up-down and close
+   
+✅  rid message focus file to preview when enter in path input
+
+
+
+✅ restrict filesize for files opened as text!!
+✅    - preview zip gives error
+✅ pdf consistenly works for some files but not others, image is generated in all cases
+✅ preview lynx lags behind one item
+✅ igonre enter-exit on msg box
+✅ zip handle all zip ops
+    
+    
+✅ login
+    ❌ longer session
+    ✅ remove btn element, use img for button
+
+✅ fix audio preview
+
+✅ exit in terminal not being stopped, again
+✅ esc in terminal closes terminal?
+   
+
+✅ ctrl-a in preview scope to stay inside preview
+
+✅ file-row now not droppable on macbook (modifier-key that is)..... almost done
+✅ for new-file or rename we listen for "enter" to confirm user operation, we need to make sure the global enter does not fire for messagebox
+✅ Get rid of ghost streams (2nd round)
+✅ refresh button must
+    ✅ save selection on tab right before switching tab?
+    ✅ dragdrop files
+    ✅    -multiple files
+    ✅    -tabs droppable
+✅ NO not with css: can text-overflow: ellipsis; in tabs be changed to a different symbol?
+✅ calculate folder size on select
+✅ hotkeys
+✅ archive handling move extract to ctrl-o and dblclick
+✅ remove queue button
+✅ new dir
+✅ new file
+✅ enter rename
+    ✅ select text up until last .
+    ✅ set caret before last .
+    ✅ enter if nothing changed, closes overlay
+✅ navigate back (lynx) focus on parent folder :D
+✅ upload/download
+✅ RENAME
+✅ shift arrow to select
+✅ tooltips, get from dom tooltip off chordedit
+✅ LESS BIG -> add micro to backend and "edit" txt files in micro
+✅ better video ready-deps
+✅ ssh, micro
+✅ handle edit :D
+✅ click does not select, just focus
+✅ !retain path on refresh
+✅ search by typing
+✅ hide dotfiles
+✅ sort on rows
+✅ now using tmux on the docker container for file ops
+    ✅- on finish copy, have frontend reload the current folders if we are still in the affected paths

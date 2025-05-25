@@ -1,0 +1,28 @@
+/* Styles specifically for pane focus, row focus, and row selection states */
+
+/* Style for the focused pane (override default in main.css) */
+.pane-container.panefocus {
+    background-color: #fff; /* White background when focused */
+    box-shadow: 0 2px 8px rgba(0,123,255,0.3);
+}
+
+.pane-container.panefocus .file-row.focus{
+    background-color: #cceeff; /* Highlight color for focused row */
+}
+
+/* Style for the focused row (immediate blue background on click) */
+.file-row.focus {
+    background-color: #cacaca; /* Highlight color for focused row */
+}
+
+/* Style for the selected row (red text) */
+.file-row.selected {
+    color: red; /* Text color for selected row */
+    /* Optional: Add a different background if needed */
+    /* background-color: #ffcccc; */
+}
+
+/* Optional: Highlight on hover (moved from main.css, keep commented if not desired) */
+/* .file-row:hover {
+    background-color: #e0f0ff;
+} */

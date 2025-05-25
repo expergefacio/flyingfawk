@@ -1,0 +1,158 @@
+/* terminalemulator.css - Styling for the terminal emulator */
+
+/* Main terminal container */
+.terminal-container {
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Terminal element - where xterm.js will be attached */
+#terminal {
+    flex: 1;
+    padding: 2px;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+/* Terminal controls */
+.terminal-controls {
+    display: flex;
+    padding: 8px;
+    background-color: #2c2c2c;
+    border-bottom: 1px solid #3c3c3c;
+}
+
+/* Control buttons */
+.terminal-control-btn {
+    margin-right: 8px;
+    padding: 6px 12px;
+    background-color: #3c3c3c;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s ease;
+}
+
+.terminal-control-btn:hover {
+    background-color: #4c4c4c;
+}
+
+.terminal-control-btn:active {
+    background-color: #5c5c5c;
+}
+
+/* Status indicator */
+.terminal-status {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #999;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.status-connected {
+    background-color: #4caf50;
+}
+
+.status-disconnected {
+    background-color: #f44336;
+}
+
+/* Make sure xterm.js cursor is visible */
+.xterm-cursor-layer {
+    z-index: 1;
+}
+
+/* Full-screen mode */
+.terminal-fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    border-radius: 0;
+}
+
+/* Terminal title bar */
+.terminal-title {
+    padding: 6px 10px;
+    background-color: #252525;
+    color: #e0e0e0;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid #3c3c3c;
+    display: flex;
+    align-items: center;
+}
+
+/* Terminal title icon */
+.terminal-title-icon {
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+/* Terminal loading indicator */
+.terminal-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.terminal-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Terminal resizer handle */
+.terminal-resizer {
+    height: 5px;
+    background-color: #2c2c2c;
+    cursor: ns-resize;
+    position: relative;
+}
+
+.terminal-resizer:hover, .terminal-resizer.active {
+    background-color: #3c3c3c;
+}
+
+.terminal-resizer::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 1px;
+    background-color: #666;
+}

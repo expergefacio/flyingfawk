@@ -1,0 +1,120 @@
+
+/* --- Styles for the Userscripts Dropdown --- */
+.userscripts-dropdown {
+    position: absolute; /* Positioned absolutely or fixed */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    padding: 5px 0;
+    z-index: 100; /* Ensure it's above most content */
+    min-width: 150px; /* Minimum width */
+    max-height: 200px; /* Max height before scrolling */
+    overflow-y: auto; /* Add scroll if needed */
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.dropdown-item {
+    padding: 8px 15px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis if text overflows */
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.error-item {
+    color: red;
+    font-style: italic;
+    cursor: default; /* No pointer cursor for error item */
+}
+.dropdown-item.error-item:hover {
+    background-color: transparent; /* No hover effect on error item */
+}
+
+
+/* --- Styles for Confirmation Buttons in Overlay --- */
+/* These styles are for the buttons dynamically added in buttons.js */
+/* Targeting buttons directly within the flex container added for confirmation */
+#overlay #message-box > div > button { /* More specific selector */
+    padding: 8px 15px;
+    margin: 0 10px; /* Add some space between buttons */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #eee;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+#overlay #message-box > div > button:hover {
+    background-color: #ddd;
+}
+
+#overlay #message-box > div > button#confirm-yes {
+    background-color: #28a745; /* Green for Yes */
+    color: white;
+    border-color: #28a745;
+}
+#overlay #message-box > div > button#confirm-yes:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+#overlay #message-box > div > button#confirm-no {
+    background-color: #dc3545; /* Red for No */
+    color: white;
+    border-color: #dc3545;
+}
+#overlay #message-box > div > button#confirm-no:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+
+/* --- Styles for Queue Status Display in Overlay --- */
+#overlay .queue-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    font-size: 0.9em;
+    color: #333;
+}
+
+#overlay .queue-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#overlay .queue-item-type {
+    color: #007bff; /* Blue for type */
+}
+
+/* Status specific colors */
+#overlay .queue-status-pending { color: #ffc107; } /* Yellow */
+#overlay .queue-status-running { color: #17a2b8; } /* Cyan/Teal */
+#overlay .queue-status-completed { color: #28a745; } /* Green */
+#overlay .queue-status-failed { color: #dc3545; } /* Red */
+
+#overlay .queue-item-details {
+    word-break: break-all; /* Break long paths/names */
+}
+
+#overlay .queue-item-id {
+    font-family: monospace;
+    font-size: 0.8em;
+    color: #666;
+}
+
+#overlay .queue-item-details .queue-error-message {
+    color: #dc3545;
+    font-weight: normal;
+}
+
+

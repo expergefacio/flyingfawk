@@ -1,0 +1,39 @@
+services:
+  webapp:
+    build: .
+    ports:
+      - "8096:5000"
+    volumes:
+      # mount the flyingfawk dir as app in the container
+      - /home/USERNAME/flyingfawk:/app
+
+      # /hostroot will act as the / inside the container
+      # whatever you mount there will be visible in the ui
+      - /home/USERNAME:/hostroot/home/USERNAME
+      - /home/USERNAME/flyingfawk/userscripts:/hostroot/userscripts
+      - /mnt/sda1:/hostroot/mnt/sda1
+
+      # pass docker sock, needed for terminal to work
+      - /var/run/docker.sock:/var/run/docker.sock
+      
+    environment:
+      - FLASK_APP=flyingfawk.py
+      - FLASK_SECRET_KEY=PROBBABLYSMARTTOSETYOUROWN
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1
+      
+    restart: unless-stopped
+
+    #prevent things like ffmpeg from crashing the whole server
+    deploy:
+      resources:
+        limits:
+          cpus: '3.0'
+          memory: '3000m'
+
+    container_name: flyingfawk_py
+    
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined

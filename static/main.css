@@ -1,0 +1,515 @@
+/* Paste the CSS from the <style> block of your old browse_dual_pane.html here */
+/* Adjusted body to stack elements vertically */
+body {
+    font-family: sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
+    height: 100vh; /* Full viewport height */
+    overflow: hidden; /* Hide scrollbars on body */
+    background-color: #f9f9f9;
+}
+#top-bar{
+    padding: 3px 5px 0px 5px;
+    line-height: 1.0;
+}
+
+/* Added container for flexbox layout */
+.main-content-container {
+    display: flex;
+    flex-grow: 1; /* This container takes up all available vertical space */
+    overflow: hidden; /* Prevent panes from overflowing this container */
+    padding: 0px 0px; /* Add padding around the panes */
+}
+
+.pane-container {
+    flex: 1; /* Each pane takes equal width */
+    display: flex;
+    flex-direction: column; /* Stack tabs, breadcrumbs, header bar, file list vertically */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden; /* Hide content outside the pane borders */
+    margin: 5px; /* Margin around panes */
+    /* Default background for non-focused pane */
+    background-color: #f0f0f0; /* Slightly grayer background - Stays in main.css as default */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.pane-container.droppable {
+    outline: 2px dashed var(#007bff) !important;
+    background-color: rgba(0, 200, 255, 0.05) !important;
+}
+
+.file-row.droppable {
+    background-color: #cceeff !important;
+}
+.droppable {
+    background-color: #cceeff !important;
+}
+
+.pane-tabs {
+    height: 20px;
+    background-color: #f0f0f0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: flex-end; /* Align tabs to bottom */
+    padding: 0 4px;
+    border-bottom: 1px solid #ccc;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    flex-shrink: 0;
+}
+
+.pane-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.pane-tabs .tab,
+.pane-tabs .newtab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    padding: 0 6px;
+    margin-right: 4px;
+    background-color: #ddd;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    font-size: 12px;
+    font-weight: normal;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.pane-tabs .tab.active {
+    background-color: #aaa;
+}
+
+
+
+/* Style for the breadcrumbs area */
+.pane-breadcrumbs {
+    padding: 5px 10px;
+    background-color: #ebebeb;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.8em;
+    flex-shrink: 0; /* Prevent from shrinking */
+    display: flex; /* Use flexbox */
+    flex-direction: row; /* Arrange input horizontally */
+    align-items: center; /* Center input vertically */
+}
+
+/* Style for the path input field */
+.pane-breadcrumbs .path-input {
+    flex-grow: 1; /* Input takes up most of the space */
+    padding: 3px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 1em; /* Relative to parent (.pane-breadcrumbs font-size) */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+/* Remove default focus outline, replace with border color change */
+.pane-breadcrumbs .path-input:focus {
+    outline: none;
+    border-color: #007bff; /* Highlight color on focus */
+    box-shadow: 0 0 3px rgba(0,123,255,0.5);
+}
+
+/* Style for the column header bar */
+.column-header-bar {
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.85em;
+    padding: 0 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Style for individual column headers inside the bar */
+.column-header {
+    flex-shrink: 0;
+    flex-grow: 1;
+    flex-basis: auto;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 5px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+/* Style for the draggable separators */
+.separator {
+    width: 5px;
+    cursor: col-resize;
+    background-color: transparent;
+    border-right: 1px solid #ccc;
+    flex-shrink: 0;
+    align-self: stretch;
+    margin: 0 2px;
+    box-sizing: border-box;
+}
+
+.sortmarker {
+    margin-right: 4px;
+    font-size: 0.6em;
+    opacity: 0.65;
+    vertical-align: text-top;
+    line-height: 1.8em; 
+}
+
+/* Container for the scrollable file list */
+.file-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0; /* Remove padding around the list of rows */
+}
+
+/* Style for the file rows (div with class="file-row") */
+.file-row {
+    display: flex;
+    height: 22px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.85em;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    cursor: pointer;
+}
+
+/* Style for individual cells within a file row (div with class="file-cell") */
+.file-cell {
+    flex-shrink: 0;
+    margin-right: 7px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 5px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+/* Style for the file name cell */
+.file-cell.file-name {
+    padding-left: 22px;
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    background-size: 16px 16px;
+}
+
+/* Style to insert emoji icon using ::before pseudo-element */
+.file-row.filetype_directory .file-cell.file-name::before {
+    content: '📁';
+    display: inline-block;
+    margin-left: -17px;
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.file-cell.file-extension {
+    /* Add specific styles if needed, e.g., text alignment */
+    text-align: left; /* Center align extension */
+}
+
+
+/* Styles for the footer bar */
+#footer {
+    box-sizing: border-box;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    background-color: #e0e0e0;
+    border-top: 1px solid #ccc;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+}
+#footer button {
+     box-sizing: border-box;
+     height: 30px;
+     flex-basis: 0;
+     flex-grow: 1;
+     padding: 0;
+     margin: 0;
+     cursor: pointer;
+     font-size: 0.9em;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     text-align: center;
+}
+
+
+/* --- Styles for the main Overlay Background --- */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* These are already present and correct for centering */
+    /* display: flex; /* Moved display control to .visible */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Initially hidden, controlled by .visible class and transition */
+    /* display: none; /* Replaced by visibility and opacity */
+    /* opacity: 0; /* Replaced by visibility and opacity */
+    transition: opacity 0.3s ease;
+
+    /* Add flex properties here to manage children containers */
+    /* Children containers should be centered by #overlay's flex */
+
+    /* === MODIFIED: Use visibility and opacity for transitions === */
+    visibility: hidden;
+    opacity: 0;
+    display: flex; /* Keep display: flex, control visibility/opacity instead */
+    /* ========================================================= */
+}
+
+/* Show overlay background */
+#overlay.visible {
+    visibility: visible; /* === MODIFIED === */
+    opacity: 1;    /* Make fully visible */
+    /* display: flex; /* Not needed if display: flex is always set */
+}
+
+
+/* Style to prevent scrolling on the body when an overlay is active */
+body.no-scroll {
+    overflow: hidden;
+}
+
+
+/* --- Styles for INDIVIDUAL Content Containers within #overlay --- */
+
+/* Base styles for all content containers (hidden by default) */
+/* These were previously specific to #message-box or #preview-container */
+#overlay > div[id$="-container"] { /* Selects divs whose ID ends with -container directly under #overlay */
+    background-color: white; /* Default white background */
+    border-radius: 5px;
+    position: relative; /* Needed for absolute positioning of close button */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    /* Default Sizing (can be overridden) */
+    width: 80vw;
+    max-width: 80vw;
+    height: 90vh;
+    max-height: 95vh;
+    overflow: hidden; /* Hide scrollbars on the container itself */
+
+    display: none;  /* === Crucially, hide all containers by default === */
+    flex-direction: column; /* Use flex for content management */
+
+     /* Ensure smooth transition when shown */
+     transition: opacity 0.3s ease, transform 0.3s ease;
+     opacity: 0;
+     transform: scale(0.95); /* Add a slight scale transform */
+}
+
+/* Style when a container is made visible by JS */
+#overlay > div[id$="-container"].visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+#overlay > div[id$="-container"] > #show-metadata {
+    position: absolute;
+    top: 52px; /* 10px below #close-preview (32px height + ~10px gap) */
+    right: 10px;
+    font-size: 1.4em;
+    cursor: pointer;
+    color: #888;
+    z-index: 1001;
+}
+
+#overlay > div[id$="-container"] > #show-metadata:hover {
+    color: #444;
+}
+
+#metadata, #preview-content {
+    opacity: 0;
+    height:0;
+}
+#metadata.visible, #preview-content.visible {
+    opacity: 1;
+    height:unset;
+}
+
+/* --- Specific Container Overrides --- */
+
+/* Message Box */
+#message-box {
+    /* Keep or adapt specific styles */
+    max-width: 500px; /* Smaller max width for messages */
+    max-height: 80vh;
+    background-color: white;
+    padding: 20px;
+}
+
+/* Preview Container */
+#preview-container {
+    /* Styles adapted from old #preview-container in main.css */
+    background-color: black; /* Dark background for video/image */
+    padding: 0; /* No padding for preview content */
+    /* Sizing adapted for larger content */
+    width: 90vw;
+    max-width: 95vw;
+    height: 90vh;
+    max-height: 95vh;
+}
+
+/* Terminal Container */
+#overlay #terminal-container {
+    /* Styles adapted from old .terminal-container in terminalemulator.css and new needs */
+    background-color: #1e1e1e; /* Dark background for terminal */
+    color: #cccccc; /* Light text color */
+    font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+    padding: 0; /* xterm.js handles its own padding/margin internally */
+    /* Sizing adapted for larger content */
+    width: unset;
+    max-width: unset;
+    height: unset;
+    max-height: unset;
+}
+
+/* Text Editor Container (Future) */
+#texteditor-container {
+    background-color: #f0f0f0; /* Light background */
+    padding: 0; /* Editor handles padding */
+    /* Sizing adapted for larger content */
+    width: 90vw;
+    max-width: 95vw;
+    height: 90vh;
+    max-height: 95vh;
+}
+
+/* Style for close buttons */
+/* Apply to all close buttons within the containers */
+#overlay > div[id$="-container"] > div[id^="close-"],
+#close-message { /* Selects divs whose ID ends with -container and children whose ID starts with close- */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.7em;
+    color: #aaa;
+    z-index: 1001; /* Ensure it's above content */
+}
+#overlay > div[id$="-container"] > div[id^="close-"]:hover {
+     color: #666;
+}
+
+
+#overlay > #terminal-content > div[id^="close-"] { /* Selects divs whose ID ends with -container and children whose ID starts with close- */
+    right: 20px;
+}
+
+ /* Style for content areas within containers */
+ /* Apply to all content divs within the containers */
+ #overlay > div[id$="-container"] > div[id$="-content"] {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    overflow: auto; /* or unset if set per-preview */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+ }
+
+ #overlay > #uppy-container{
+    width: unset;
+    max-width: unset;
+    height: unset;
+ }
+
+ /* Specific adjustments for message content padding */
+ #message-content {
+    padding: 10px; /* Add back some padding for message content */
+ }
+
+
+/* --- Styles for error/file messages displayed by JS inside file-list-container (These are not in the overlay) --- */
+/* Keep these as they are for file listing pane messages */
+.error-message {
+    color: red;
+    padding: 20px;
+    text-align: center;
+}
+.file-message {
+    color: #555;
+    padding: 20px;
+    text-align: center;
+}
+.file-message a {
+    color: #0066cc;
+    text-decoration: none;
+}
+.file-message a:hover {
+    text-decoration: underline;
+}
+
+#preview_img_container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+  }
+  
+  #preview_img_wrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    display: block;
+    position: relative;
+  }
+  #preview_img_inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    min-width: 100%;
+  }
+
+  #preview_img_wrapper.dragging {
+    cursor: grabbing;
+  }
+  #preview_img_wrapper {
+    cursor: grab;
+  }
+
+  #preview_img_wrapper img {
+    display: block;
+    max-width: none;
+    max-height: none;
+  }
+  
+  #preview_img_buttons {
+    flex: 0 0 auto;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+  }
