@@ -85,8 +85,8 @@ logging.debug(f"SESSION_COOKIE_PATH set to '/', SESSION_COOKIE_HTTPONLY set to F
 # Explicitly set async_mode to 'eventlet'
 # Set logger=False and engineio_logger=False to reduce clutter
 socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins=[
-    "http://localhost:8096",
-    "http://edd.local:8096"
+    #"http://example.com",
+    "http://localhost:8096"
 ], logger=False, engineio_logger=False)
 logging.debug("SocketIO initialized with reduced logging.")
 
