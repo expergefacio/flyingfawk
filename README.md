@@ -88,9 +88,18 @@ USERNAME = os.environ.get("USERNAME")
 PASSWORD = os.environ.get("PASSWORD")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 ```
+
 Edit `docker-compose.yml`:
 ```python
       - FLASK_SECRET_KEY=CHANGETHIS
+```
+
+If you set up access via domain, remember to allow the domain here:
+Edit `flyingfawk.py`:
+```python
+socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins=[
+    #"http://example.com",
+    "http://localhost:8096"
 ```
 
 ### 📁 Mount volumes
