@@ -145,8 +145,8 @@ function initializeTerminal(terminalContentElement, initialCommand, exitWhenDone
     // --- Connect to Socket.IO ---
     // Assumes SOCKETIO_URL is available globally from index.html
     if (typeof io === 'function' && typeof SOCKETIO_URL !== 'undefined') {
-        console.log("Connecting to Socket.IO for terminal at:", SOCKETIO_URL);
-        socket = io(SOCKETIO_URL);
+        console.log("Connecting to Socket.IO for terminal at:", window.location.origin);
+        socket = io(window.location.origin);
 
         // --- Socket.IO Event Listeners ---
         socket.on('connect', function() {
