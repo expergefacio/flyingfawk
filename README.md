@@ -1,17 +1,24 @@
-# flyingFawk
+# flyingfawk
+
+![flyingfawk logo](https://raw.githubusercontent.com/expergefacio/flyingfawk/refs/heads/main/static/flyingfawk.jpeg)
 
 ## What it is
 
-**FlyingFawk** is a dual-pane web GUI for managing files and terminals on an Ubuntu Server.  
+**flyingfawk** is a dual-pane web GUI for managing files and terminals on an Ubuntu Server.  
 ⚠️ Alpha/preview release — expect bugs and security limitations.
 
----
+
+
+## Screens
+
+![flyingfawk Screenshot vid](https://raw.githubusercontent.com/expergefacio/flyingfawk/refs/heads/main/screens/vid.jpeg)
+![flyingfawk Screenshot term](https://raw.githubusercontent.com/expergefacio/flyingfawk/refs/heads/main/screens/term.jpeg)
 
 ## Who it's for
 
 This tool is designed for "power users" — those comfortable working with Linux, servers, and Docker.
 
----
+
 
 ## Features
 
@@ -21,7 +28,7 @@ FlyingFawk provides:
 - File preview support (images, text, PDFs, etc.)
 - Upload, rename, delete, and run user-scripts
 
----
+
 
 ## Installation (Ubuntu Server)
 
@@ -65,7 +72,7 @@ git clone https://github.com/yourusername/flyingfawk.git
 cd flyingfawk
 ```
 
----
+
 
 ## Configuration
 
@@ -106,7 +113,6 @@ Edit `docker-compose.yml`:
       - /var/run/docker.sock:/var/run/docker.sock
 ```
 
----
 
 ## Build & Run
 
@@ -118,7 +124,7 @@ docker compose up -d
 Access via your browser at:  
 **http://0.0.0.0:8096**
 
----
+
 
 ## Keybinds
 
@@ -153,7 +159,7 @@ Access via your browser at:
 | Esc              | Close overlay / preview         |
 
 
----
+
 
 ## Security Warning
 
@@ -163,9 +169,9 @@ Avoid exposing it to the internet or public/open LAN without:
 - Authentication enhancements
 - Firewall restrictions
 
----
 
-## Designspecs
+
+## Design Specs
 
 We are using vanilla js with minimal deps, the deps we have (xterm, socketio, uppy) are bundled so they can be run locally even if internet is down. It also means its open to user-edits without any setup and rebuilding.
 Has to work in chorme, and has to run in chrome trough vnc/rd, hence some of the keybinds are non traditional
