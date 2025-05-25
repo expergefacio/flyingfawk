@@ -46,7 +46,7 @@ docker --version
 sudo docker run hello-world
 ```
 
-### 3. Allow non-root Docker usage (optional)
+### 3. Allow non-root Docker usage (non-optional)
 ```bash
 sudo usermod -aG docker $USER
 newgrp docker
@@ -60,6 +60,7 @@ sudo ufw allow 8096 && sudo ufw enable && sudo ufw reload
 ### 5. Clone the repo
 ```bash
 #this have only been tested running from /home/username/flyingfawk
+cd
 git clone https://github.com/yourusername/flyingfawk.git
 cd flyingfawk
 ```
@@ -161,3 +162,12 @@ Avoid exposing it to the internet or public/open LAN without:
 - Reverse proxy with SSL
 - Authentication enhancements
 - Firewall restrictions
+
+---
+
+## Designspecs
+
+We are using vanilla js with minimal deps, the deps we have (xterm, socketio, uppy) are bundled so they can be run locally even if internet is down. It also means its open to user-edits without any setup and rebuilding.
+Has to work in chorme, and has to run in chrome trough vnc/rd, hence some of the keybinds are non traditional
+Terminal can never auto-exec, user must always press enter
+File operations happens in terminal, the terminal connects to a tmux-instance on the dockercontainer, and therefore is as persistent and reliable as i can make it, however it is indeniably ugly as fawk🤣
