@@ -88,9 +88,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 ```
 Edit `docker-compose.yml`:
 ```python
-      - FLASK_SECRET_KEY=3r9SFlExUIr2s8jeluszKYe0
+      - FLASK_SECRET_KEY=CHANGETHIS
 ```
-      - FLASK_SECRET_KEY=3r9SFlExUIr2s8jeluszKYe0
 
 ### 📁 Mount volumes
 Take note that this is designed to run on the same userid as the host, so if are not running the default 1000:1000, you may want to change this in the Dockerfile.
